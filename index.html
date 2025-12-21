@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Work–Energy Skate Simulation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.90.0/dist/phaser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+  <main class="page">
+    <section class="card">
+      <h1><u>Work–Energy Skate Simulation</u></h1>
+
+      <div class="demo-wrap">
+        <div id="game"></div>
+      </div>
+
+      <div class="physics-question">
+
+        <div class="qustion"> 
+            <p>A skater wants to hit a slide on a steel rail and make it all the way to the end without falling or pushing again. The rail is 2.0 meters long and angled 20 degrees upward.<br></br>
+
+            The combined mass of the skater and skateboard is 60 kilograms. Because the rail is steel, there is friction between the skateboard and the rail, with a coefficient of 0.20. After the skater gets onto the rail, he does not push anymore and simply slides upward.<br></br>
+
+            Question:
+            What is the minimum initial speed the skater must have right before hitting the rail so that he just reaches the end of the rail and comes to rest?s</p>
+
+    <div class ="box">
+        <div class="formula">
+        <p>½mv² = mgd sin(θ) + μmgd cos(θ)<br></br></p>
+        </div>
+
+        <div class="mc-question">
+          <button class="mc-option" data-answer="A">A) 2.5 m/s</button>
+          <button class="mc-option" data-answer="B">B) 3.2 m/s</button>
+          <button class="mc-option" data-answer="C">C) 4.56 m/s</button>
+          <button class="mc-option" data-answer="D">D) 5.1 m/s</button>
+        </div>
+
+        <div class="feedback" id="feedback">Choose an answer.</div>
+
+        <button id="retry" class="retry hidden">Try Again</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+
+  <script>
+    const CORRECT = "C";
+    const options = document.querySelectorAll(".mc-option");
+    const feedback = document.getElementById("feedback");
+    const retry = document.getElementById("retry");
+
+    function disableOptions(disabled) {
+      options.forEach(b => b.disabled = disabled);
+    }
+
+    options.forEach(btn => {
+      btn.addEventListener("click", () => {
+        options.forEach(b => b.classList.remove("correct", "wrong"));
+
+        if (btn.dataset.answer === CORRECT) {
+          btn.classList.add("correct");
+          feedback.textContent = "Correct! 🎉";
+          confetti({ particleCount: 140, spread: 80, origin: { y: 0.6 } });
+
+          startSimulation();
+          disableOptions(true);
+          retry.classList.remove("hidden");
+        } else {
+          btn.classList.add("wrong");
+          feedback.textContent = "Incorrect — try again.";
+          failSimulation();
+        }
+      });
+    });
+
+    retry.addEventListener("click", () => {
+      disableOptions(false);
+      retry.classList.add("hidden");
+      feedback.textContent = "Choose an answer.";
+      resetSimulation();
+    });
+  </script>
+</body>
+</html>
