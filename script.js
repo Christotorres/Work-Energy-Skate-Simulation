@@ -74,7 +74,7 @@ function create() {
   bg.y = (this.scale.height - bg.displayHeight) / 2;
 
   skater = this.add.image(APPROACH_START.x, APPROACH_START.y, "skater");
-  skater.setScale(0.45);
+  skater.setScale(1.5);
   skater.setDepth(10);
 
   simulationReady = true;
